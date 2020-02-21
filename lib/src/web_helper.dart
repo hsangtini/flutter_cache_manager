@@ -133,10 +133,16 @@ class WebHelper {
     }
 
     var fileExtension = "";
-    if (response.hasHeader("content-type")) {
-      var type = response.header("content-type").split("/");
-      if (type.length == 2) {
-        fileExtension = ".${type[1]}";
+    final url = cacheObject.url;
+
+    if (url.isNotEmpty && url.lastIndexOf(".") != -1) {
+      fileExtension = url.substring(url.lastIndexOf("."), url.length);
+    } else {
+      if (response.hasHeader("content-type")) {
+        var type = response.header("content-type").split("/");
+        if (type.length == 2) {
+          fileExtension = ".${type[1]}";
+        }
       }
     }
 
